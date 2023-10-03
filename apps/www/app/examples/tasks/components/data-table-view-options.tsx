@@ -1,6 +1,6 @@
 "use client"
 
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
+import { useFeatureFlag } from "@groundcontrolsh/react"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
 
@@ -11,6 +11,7 @@ import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/registry/new-york/ui/dropdown-menu"
 
 interface DataTableViewOptionsProps<TData> {
@@ -20,40 +21,56 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+  const canExport = useFeatureFlag("csv-export", { actors: ["user:1234"] })
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <>
+      {canExport && (
         <Button
           variant="outline"
           size="sm"
-          className="ml-auto hidden h-8 lg:flex"
+          className="mr-2"
+          onClick={() => {
+            window.open("/api/tasks/export")
+          }}
         >
-          <MixerHorizontalIcon className="mr-2 h-4 w-4" />
-          View
+          Export CSV
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {table
-          .getAllColumns()
-          .filter(
-            (column) =>
-              typeof column.accessorFn !== "undefined" && column.getCanHide()
-          )
-          .map((column) => {
-            return (
-              <DropdownMenuCheckboxItem
-                key={column.id}
-                className="capitalize"
-                checked={column.getIsVisible()}
-                onCheckedChange={(value) => column.toggleVisibility(!!value)}
-              >
-                {column.id}
-              </DropdownMenuCheckboxItem>
+      )}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            className="ml-auto hidden h-8 lg:flex"
+          >
+            <MixerHorizontalIcon className="mr-2 h-4 w-4" />
+            View
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-[150px]">
+          <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {table
+            .getAllColumns()
+            .filter(
+              (column) =>
+                typeof column.accessorFn !== "undefined" && column.getCanHide()
             )
-          })}
-      </DropdownMenuContent>
-    </DropdownMenu>
+            .map((column) => {
+              return (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  className="capitalize"
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                >
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+              )
+            })}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   )
 }

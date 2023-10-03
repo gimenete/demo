@@ -46,17 +46,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/new-york/ui/select"
+import { useParams, useRouter } from "next/navigation"
 
 const groups = [
-  {
-    label: "Personal Account",
-    teams: [
-      {
-        label: "Alicia Koch",
-        value: "personal",
-      },
-    ],
-  },
+  // {
+  //   label: "Personal Account",
+  //   teams: [
+  //     {
+  //       label: "Alicia Koch",
+  //       value: "personal",
+  //     },
+  //   ],
+  // },
   {
     label: "Teams",
     teams: [
@@ -81,9 +82,12 @@ interface TeamSwitcherProps extends PopoverTriggerProps {}
 export default function TeamSwitcher({ className }: TeamSwitcherProps) {
   const [open, setOpen] = React.useState(false)
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false)
-  const [selectedTeam, setSelectedTeam] = React.useState<Team>(
-    groups[0].teams[0]
-  )
+
+  const router = useRouter();
+  const params = useParams();
+  const selectedTeam = groups[0].teams.find(t => t.value === String(params?.team))
+
+  if (!selectedTeam) return null;
 
   return (
     <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
@@ -118,7 +122,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
                     <CommandItem
                       key={team.value}
                       onSelect={() => {
-                        setSelectedTeam(team)
+                        router.push(`/examples/tasks/${team.value}`)
                         setOpen(false)
                       }}
                       className="text-sm"

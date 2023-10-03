@@ -107,6 +107,12 @@ importers:
       '@faker-js/faker':
         specifier: ^7.6.0
         version: 7.6.0
+      '@groundcontrolsh/groundcontrol':
+        specifier: ^0.4.2
+        version: 0.4.2
+      '@groundcontrolsh/react':
+        specifier: ^0.3.0
+        version: 0.3.0(@groundcontrolsh/groundcontrol@0.4.2)(react@18.2.0)
       '@hookform/resolvers':
         specifier: ^3.1.0
         version: 3.1.0(react-hook-form@7.44.2)
@@ -1829,6 +1835,20 @@ packages:
       '@floating-ui/dom': 1.2.9
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@groundcontrolsh/groundcontrol@0.4.2:
+    resolution: {integrity: sha512-j8lnjvy0bXi2jvlg14HRgvCwTwaD/gIuLSdQhKArlDsjmZChNIej7z8yXzYi0C/q+dG64TTjRz8iEyRf2+zd+g==}
+    dev: false
+
+  /@groundcontrolsh/react@0.3.0(@groundcontrolsh/groundcontrol@0.4.2)(react@18.2.0):
+    resolution: {integrity: sha512-dZMp0N0E6SmBctg9p/iOQ4h/oQh9BHgeeFwFFu/hmISq3bi0ouJBO6uuQvXWCTJlAsps/8l0mUNsU+x5R6REDg==}
+    peerDependencies:
+      '@groundcontrolsh/groundcontrol': ^0.4.2
+      react: ^18.2.0
+    dependencies:
+      '@groundcontrolsh/groundcontrol': 0.4.2
+      react: 18.2.0
     dev: false
 
   /@grpc/grpc-js@1.8.14:
