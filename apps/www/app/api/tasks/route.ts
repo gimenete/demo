@@ -1,14 +1,9 @@
-import { GroundControlClient } from "@groundcontrolsh/groundcontrol";
+import { groundcontrol } from "@/app/groundcontrol";
 import fs from "fs/promises"
 import path from "path";
 
 export async function GET() {
-  const client = new GroundControlClient({
-    projectId: "P0J3GPCGANJSV5MV",
-    apiKey: "gcp_6N47wSF9uNLgSFG47R0qMtbCQGCJx22Xmb6e",
-  })
-
-  const canExport = await client.isFeatureFlagEnabled("csv-export", { actors: ["user:1234"] })
+  const canExport = await groundcontrol.isFeatureFlagEnabled("csv-export", { actors: ["user:1234"] })
   if (!canExport) {
     return new Response("Not found", { status: 404 })
   }

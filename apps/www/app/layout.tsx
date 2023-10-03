@@ -14,17 +14,13 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeSwitcher } from "@/components/theme-switcher"
 import { Toaster as DefaultToaster } from "@/registry/default/ui/toaster"
 import { Toaster as NewYorkToaster } from "@/registry/new-york/ui/toaster"
+import { groundcontrol } from "./groundcontrol"
 
 interface RootLayoutProps {
   children: React.ReactNode
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  const client = new GroundControlClient({
-    projectId: "P0J3GPCGANJSV5MV",
-    apiKey: "gcp_6N47wSF9uNLgSFG47R0qMtbCQGCJx22Xmb6e",
-  })
-
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -42,7 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <div className="relative flex min-h-screen flex-col pt-10">
-              <GroundControlProvider client={client}>
+              <GroundControlProvider client={groundcontrol}>
                 <div className="flex-1">{children}</div>
               </GroundControlProvider>
             </div>
