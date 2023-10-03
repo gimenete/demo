@@ -8,10 +8,8 @@ export async function GET() {
     apiKey: "gcp_6N47wSF9uNLgSFG47R0qMtbCQGCJx22Xmb6e",
   })
 
-  const canExport = await client.isFeatureFlagEnabled("csv-export", { actors: ["user:1234"] })
-  if (!canExport) {
-    return new Response("Not found", { status: 404 })
-  }
+  
+  
 
   const data = await fs.readFile(
     path.join(process.cwd(), "app/examples/tasks/data/tasks.json"), "utf-8"

@@ -21,12 +21,11 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
-  const canExport = useFeatureFlag("csv-export", { actors: ["user:1234"] })
+  
 
   return (
     <>
-      {canExport && (
-        <Button
+      <Button
           variant="outline"
           size="sm"
           className="mr-2"
@@ -36,7 +35,6 @@ export function DataTableViewOptions<TData>({
         >
           Export CSV
         </Button>
-      )}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
