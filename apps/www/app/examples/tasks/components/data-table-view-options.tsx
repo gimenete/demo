@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/registry/new-york/ui/dropdown-menu"
+import { useFeatureFlag } from "@groundcontrolsh/react"
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
@@ -20,8 +21,19 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+
+  const canExport = useFeatureFlag("csv-export", {
+    actors: ["user:1234"]
+  });
+
   return (
     <>
+      {canExport && <Button variant="outline" size="sm" className="mr-4" onClick={() => {
+        window.open("/api/tasks")
+      }}>
+        Export CSV
+      </Button>}
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
