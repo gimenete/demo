@@ -22,17 +22,15 @@ export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
 
-  const canExport = useFeatureFlag("csv-export", {
-    actors: ["user:1234"]
-  });
+  
 
   return (
     <>
-      {canExport && <Button variant="outline" size="sm" className="mr-4" onClick={() => {
+      <Button variant="outline" size="sm" className="mr-4" onClick={() => {
         window.open("/api/tasks")
       }}>
         Export CSV
-      </Button>}
+      </Button>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
