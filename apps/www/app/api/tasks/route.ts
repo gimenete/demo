@@ -1,13 +1,7 @@
-import { groundcontrol } from "@/app/groundcontrol";
-import fs from "fs/promises"
+import fs from "fs/promises";
 import path from "path";
 
 export async function GET() {
-  const canExport = await groundcontrol.isFeatureFlagEnabled("csv-export", { actors: ["user:1234"] })
-  if (!canExport) {
-    return new Response("Not found", { status: 404 })
-  }
-
   const data = await fs.readFile(
     path.join(process.cwd(), "app/examples/tasks/data/tasks.json"), "utf-8"
   )

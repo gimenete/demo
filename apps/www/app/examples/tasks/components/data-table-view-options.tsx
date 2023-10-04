@@ -1,6 +1,5 @@
 "use client"
 
-import { useFeatureFlag } from "@groundcontrolsh/react"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
 
@@ -21,22 +20,8 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
-  const canExport = useFeatureFlag("csv-export", { actors: ["user:1234"] })
-
   return (
     <>
-      {canExport && (
-        <Button
-          variant="outline"
-          size="sm"
-          className="mr-2"
-          onClick={() => {
-            window.open("/api/tasks/export")
-          }}
-        >
-          Export CSV
-        </Button>
-      )}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
